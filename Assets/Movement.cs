@@ -5,7 +5,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     Rigidbody rb;
-    [SerializeField] float mainThrust = 1000f;
+    [SerializeField] float mainThrust = 900f;
     [SerializeField] float rotationThrust = 100f;
 
     // Start is called before the first frame update
@@ -46,9 +46,9 @@ public class Movement : MonoBehaviour
 
         void ApplyRotation(float rotationThisFrame)
         {
-            rb.freezeRotation = true; //çarpýþýnca rotasyonu kendi kendine dönmesin diye. 
+            rb.freezeRotation = true; //çarpýþýnca rotasyonu kendi kendine dönmesin diye. çarpýp rotasyonu deðiþince konrolü bozuluyor.
             transform.Rotate(Vector3.forward * Time.deltaTime * rotationThisFrame);
-            rb.freezeRotation = false;
+            rb.freezeRotation = false; //fiziðe geri döndük.
         }
     }
 }
