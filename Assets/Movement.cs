@@ -46,7 +46,9 @@ public class Movement : MonoBehaviour
 
         void ApplyRotation(float rotationThisFrame)
         {
+            rb.freezeRotation = true; //çarpýþýnca rotasyonu kendi kendine dönmesin diye. 
             transform.Rotate(Vector3.forward * Time.deltaTime * rotationThisFrame);
+            rb.freezeRotation = false;
         }
     }
 }
