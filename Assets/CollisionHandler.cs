@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
@@ -20,10 +21,32 @@ public class CollisionHandler : MonoBehaviour
                 break;
             case "finish":
                 Debug.Log("you won");
+                LoadNextLevel();
                 break;
             default:
-                Debug.Log("hit an obstacle");
+                //Debug.Log("hit an obstacle");
+                //SceneManager.LoadScene("SandBox");
+                ReloadLevel();
                 break;
         }
+    }
+
+    void LoadNextLevel()
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex; //daha temiz kod için sahne indexini deðiþkene atadýk.
+        int nextSceneIndex = currentSceneIndex + 1;
+
+        if (nextSceneIndex == SceneManager.sceneCountInBuildSettings)
+        {
+            nextSceneIndex = 0;
+        }
+        SceneManager.LoadScene(nextSceneIndex);
+    }
+
+    void ReloadLevel()
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex; //daha temiz kod için sahne indexini deðiþkene atadýk.
+        SceneManager.LoadScene(currentSceneIndex);
+        //builddeki scene indexini alýr ve o sahneyi döndürür.
     }
 }
