@@ -6,10 +6,26 @@ using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
-    string hit;
+    [SerializeField] float levelLoadDelay = 2.0f;
+    [SerializeField] AudioClip successSound;
+    [SerializeField] AudioClip crashSound;
+    [SerializeField] ParticleSystem successEffect;
+    [SerializeField] ParticleSystem crashEffect;
+
+    AudioSource audioSource;
+
+    bool isTransitioning;
+
+    private void Start()
+    {
+        isTransitioning = false;
+        audioSource = GetComponent<AudioSource>();
+    }
+
     void OnCollisionEnter(Collision other)
     {
-        hit = other.gameObject.tag;
+        if (isTransitioning) { return; } //isTrantioning true ise aþaðýya geçmeden dön dedik. böylece 2.kez çarpýþma yapmayacak.çarpmadaysa tekrar çarpmayacak.
+        //if isTransitioning == true da yzabilirdik. baþýna ! koymak 'not' true/false anlamý taþýrdý. (!isTransitioning ---> deðer normalde true ama not truedan false olacak. o da ifi çalýþtýrmaz.
         switch (other.gameObject.tag) 
         {
             
@@ -20,17 +36,33 @@ public class CollisionHandler : MonoBehaviour
                 Debug.Log("add fuel");
                 break;
             case "finish":
-                Debug.Log("you won");
-                LoadNextLevel();
+                StartSuccessSequence();
                 break;
             default:
                 //Debug.Log("hit an obstacle");
                 //SceneManager.LoadScene("SandBox");
-                ReloadLevel();
+                StartCrashSequence();
                 break;
         }
     }
 
+    void StartSuccessSequence()
+    {
+        isTransitioning = true;
+        GetComponent<Movement>().enabled = false;
+        audioSource.Stop();
+        audioSource.PlayOneShot(successSound);
+        successEffect.Play();
+        Invoke("LoadNextLevel", levelLoadDelay);
+    }
+    void StartCrashSequence()
+    {
+        isTransitioning = true;
+        GetComponent<Movement>().enabled = false;
+        audioSource.Stop();
+        audioSource.PlayOneShot(crashSound);
+        Invoke("ReloadLevel", levelLoadDelay);
+    }
     void LoadNextLevel()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex; //daha temiz kod için sahne indexini deðiþkene atadýk.
