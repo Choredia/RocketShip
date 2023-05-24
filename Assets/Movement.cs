@@ -18,7 +18,7 @@ public class Movement : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
-        
+      
     }
 
     // Update is called once per frame
@@ -26,6 +26,7 @@ public class Movement : MonoBehaviour
     {
         ProcessThrust();
         ProcessRotation();
+
     }
 
     void ProcessThrust()
