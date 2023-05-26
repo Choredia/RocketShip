@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Purple0.unity
     guid: 9b9d06ef46547a2428f346efe94f98aa
   - enabled: 1
-    path: Assets/Scenes/Red0.unity
+    path: Assets/Scenes/Blue0.unity
+    guid: 7c639e7fe0529ba4a9b04c25c1586140
+  - enabled: 1
+    path: Assets/Scenes/Spike.unity
     guid: 144ce63533f097b4884783a88c30e2d8
   m_configObjects: {}
